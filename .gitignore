@@ -4,6 +4,7 @@
 /public
 /build-tools/ckeditor/ckbuilder.jar
 /var
+.*
 
 # composer stuff
 /vendor
