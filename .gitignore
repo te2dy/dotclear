@@ -5,6 +5,7 @@
 /build-tools/ckeditor/ckbuilder.jar
 /var
 .*
+/themes/odyssey
 
 # composer stuff
 /vendor
