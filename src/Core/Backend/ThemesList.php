@@ -30,6 +30,7 @@ use Dotclear\Helper\Html\Form\Submit;
 use Dotclear\Helper\Html\Form\Summary;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Html\Template\Template;
 use Dotclear\Helper\Network\Http;
 use Dotclear\Interface\Module\ModulesInterface;
 use Dotclear\Module\ModuleDefine;
@@ -487,6 +488,9 @@ class ThemesList extends ModulesList
                 App::blog()->settings()->system->put('theme', $define->getId());
                 App::blog()->triggerBlog();
 
+                // Empty theme (and theme's parent if any) template cache
+                $this->emptyThemeTemplatesCache();
+
                 Notices::addSuccessNotice(sprintf(__('Theme %s has been successfully selected.'), Html::escapeHTML($define->get('name'))));
                 Http::redirect($this->getURL() . '#themes');
             }
@@ -785,5 +789,46 @@ class ThemesList extends ModulesList
         }
 
         return $this->config_file;
+    }
+
+    /**
+     * Remove any existing compiled theme (and theme's parent) template cache files
+     *
+     * @since 2.31
+     */
+    private function emptyThemeTemplatesCache(): void
+    {
+        $theme = App::blog()->settings()->system->theme;
+        $paths = [
+            App::blog()->themesPath() . '/' . $theme . '/tpl',
+        ];
+        $parent_theme = App::themes()->moduleInfo($theme, 'parent');
+        if ($parent_theme) {
+            $paths[] = App::blog()->themesPath() . '/' . $parent_theme . '/tpl';
+        }
+
+        // Instantiate a shadow template engine with only path(s) from theme (and theme's parent if any)
+        $engine = new Template(App::config()->cacheRoot(), 'App::frontend()->template()');
+        $engine->setPath($paths);
+
+        // Template stack
+        $stack = [];
+        // Loop on template paths
+        foreach ($paths as $path) {
+            $files = Files::scandir($path);
+            foreach ($files as $filename) {
+                if (preg_match('/^(.*)\.(html|xml|xsl)$/', $filename, $matches) && !in_array($filename, $stack)) {
+                    $stack[] = $filename;
+                    $cache   = $engine->getFileCachePath((string) $engine->getFilePath($filename));
+                    if (file_exists($cache)) {
+                        try {
+                            unlink($cache);
+                        } catch (Exception) {
+                            // Ignore deletion error (may be fixed later by administrator using full template cache emptying)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

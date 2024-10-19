@@ -14,8 +14,8 @@ use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Core\Process;
 use Dotclear\Helper\Html\Form\Button;
-use Dotclear\Helper\Html\Form\Caption;
 use Dotclear\Helper\Html\Form\Decimal;
+use Dotclear\Helper\Html\Form\Details;
 use Dotclear\Helper\Html\Form\Div;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Hidden;
@@ -24,7 +24,9 @@ use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Number;
 use Dotclear\Helper\Html\Form\Para;
 use Dotclear\Helper\Html\Form\Select;
+use Dotclear\Helper\Html\Form\Set;
 use Dotclear\Helper\Html\Form\Submit;
+use Dotclear\Helper\Html\Form\Summary;
 use Dotclear\Helper\Html\Form\Table;
 use Dotclear\Helper\Html\Form\Tbody;
 use Dotclear\Helper\Html\Form\Td;
@@ -242,12 +244,11 @@ class Manage extends Process
                 $strong = $global ? false : !$v['global'];
                 $rows[] = self::prefLine($k, $v, $ws, $field_name, $strong);
             }
-            $tables[] = (new Div())
+            $table = (new Div())
                 ->class('table-outer')
                 ->items([
-                    (new Table($prefix . $ws))
+                    (new Table())
                         ->class('prefs')
-                        ->caption((new Caption($ws))->class('as_h3'))
                         ->thead(
                             (new Thead())
                                 ->rows([
@@ -264,19 +265,32 @@ class Manage extends Process
                                 ->rows($rows)
                         ),
                 ]);
+
+            $tables[] = (new Form([$submit_id . '_' . $ws . '_form']))
+                ->action(App::backend()->url()->get('admin.plugin') . '#' . ($global ? 'global' : 'local') . '.' . $prefix . $ws)
+                ->method('post')
+                ->fields([
+                    (new Details([$prefix . 'pref_details', $prefix . $ws]))
+                        ->summary(new Summary($ws))
+                        ->items([
+                            $table,
+                            (new Para())
+                                ->class('form-buttons')
+                                ->items([
+                                    (new Submit([$submit_id . '_' . $ws . '_post'], __('Save'))),
+                                    ...My::hiddenFields(),
+                                ]),
+                        ]),
+                ]);
         }
 
-        $elements[] = (new Form([$submit_id . '_form']))
-            ->action(App::backend()->url()->get('admin.plugin'))
-            ->method('post')
-            ->fields([
+        $elements[] = (new Set())
+            ->items([
                 ... $tables,
                 (new Para())
                     ->class('form-buttons')
                     ->items([
-                        (new Submit([$submit_id . '_post'], __('Save'))),
                         (new Button([$submit_id . '_back'], __('Back')))->class(['go-back','reset','hidden-if-no-js']),
-                        ...My::hiddenFields(),
                     ]),
             ]);
 

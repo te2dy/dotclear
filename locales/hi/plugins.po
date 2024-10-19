@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 06ca5b8973ea9e8a7cb2cb44509e3c72\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 05:25+0200\n"
-"PO-Revision-Date: 2024-07-17 03:33\n"
+"POT-Creation-Date: 2024-10-05 09:45+0200\n"
+"PO-Revision-Date: 2024-10-10 04:31\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -667,10 +667,10 @@ msgstr "एआईएससी एपीआई कुंजी:"
 #: plugins/blogroll/src/ManageEdit.php:204
 #: plugins/blogroll/src/ManageEdit.php:241
 #: plugins/blogroll/src/ManageEdit.php:253
-#: plugins/importExport/src/ExportBlogMaintenanceTask.php:99
-#: plugins/importExport/src/ExportBlogMaintenanceTask.php:114
-#: plugins/importExport/src/ExportFullMaintenanceTask.php:98
-#: plugins/importExport/src/ExportFullMaintenanceTask.php:113
+#: plugins/importExport/src/ExportBlogMaintenanceTask.php:100
+#: plugins/importExport/src/ExportBlogMaintenanceTask.php:119
+#: plugins/importExport/src/ExportFullMaintenanceTask.php:99
+#: plugins/importExport/src/ExportFullMaintenanceTask.php:118
 #: plugins/importExport/src/ModuleImportFlat.php:298
 #: plugins/pages/src/ManagePage.php:712
 msgid "Required field"
@@ -1620,16 +1620,21 @@ msgstr "उचित ट्रेकबैक"
 msgid "Import / Export"
 msgstr "आयात/निर्यात"
 
-#: plugins/importExport/src/ExportBlogMaintenanceTask.php:41
-#: plugins/importExport/src/ExportFullMaintenanceTask.php:40
+#: plugins/importExport/src/ExportBlogMaintenanceTask.php:42
+#: plugins/importExport/src/ExportFullMaintenanceTask.php:41
 msgid "Database export"
 msgstr "डाटाबेस निर्यात"
 
-#: plugins/importExport/src/ExportBlogMaintenanceTask.php:42
+#: plugins/importExport/src/ExportBlogMaintenanceTask.php:43
 msgid "Download database of current blog"
 msgstr "वर्तमान ब्लॉग का डेटाबेस डाउनलोड करें"
 
-#: plugins/importExport/src/ExportFullMaintenanceTask.php:41
+#: plugins/importExport/src/ExportBlogMaintenanceTask.php:104
+#: plugins/importExport/src/ExportFullMaintenanceTask.php:103
+msgid "Compress file"
+msgstr "फ़ाइल संपीडित करें"
+
+#: plugins/importExport/src/ExportFullMaintenanceTask.php:42
 msgid "Download database of all blogs"
 msgstr "सभी ब्लॉग का डेटाबेस डाउनलोड करें"
 
@@ -2362,7 +2367,7 @@ msgid "%d pages"
 msgstr "%d पृष्ठ"
 
 #: plugins/pages/src/Backend.php:92 plugins/pages/src/Manage.php:147
-#: plugins/pages/src/ManagePage.php:105 plugins/pages/src/ManagePage.php:833
+#: plugins/pages/src/ManagePage.php:105 plugins/pages/src/ManagePage.php:837
 msgid "New page"
 msgstr "नया पृष्ठ"
 
@@ -2439,8 +2444,8 @@ msgstr "पृष्ठ क्रम सहेजें"
 msgid "This page does not exist."
 msgstr "यह पृष्ठ मौजूद नहीं है."
 
-#: plugins/pages/src/ManagePage.php:183 plugins/pages/src/ManagePage.php:833
-#: plugins/pages/src/ManagePage.php:854
+#: plugins/pages/src/ManagePage.php:183 plugins/pages/src/ManagePage.php:837
+#: plugins/pages/src/ManagePage.php:858
 msgid "Edit page"
 msgstr "पृष्ठ संपादित करें"
 
@@ -2488,7 +2493,7 @@ msgstr "चेतावनी: यदि आप URL को दस्ती र�
 msgid "Introduction to the page."
 msgstr "पृष्ठ के लिए परिचय."
 
-#: plugins/pages/src/ManagePage.php:1139
+#: plugins/pages/src/ManagePage.php:1143
 msgid "Select this comment"
 msgstr "इस टिप्पणी को चुनें"
 

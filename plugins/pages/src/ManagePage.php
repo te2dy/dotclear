@@ -779,7 +779,7 @@ class ManagePage extends Process
                     ->class('sb-box')
                     ->items([
                         (new Text('h4', $c['title'])),
-                        (new Text('', implode('', iterator_to_array($c['items'])))),
+                        (new Text('', implode('', $c['items']))),
                     ])
                     ->render();
             }
@@ -830,7 +830,11 @@ class ManagePage extends Process
                 $buttons[] = (new Hidden('id', (string) App::backend()->post_id));
             }
 
-            $title = (App::backend()->post_id ? __('Edit page') : __('New page')) . sprintf(' &rsaquo; %s', App::formater()->getFormaterName(App::backend()->post_format));
+            $format = (new Text(
+                'span',
+                ' &rsaquo; ' . App::formater()->getFormaterName(App::backend()->post_format) . ''
+            ));
+            $title = (App::backend()->post_id ? __('Edit page') : __('New page')) . $format->render();
 
             // Everything is ready, time to display this form
             echo (new Div())
@@ -967,7 +971,7 @@ class ManagePage extends Process
                     (new Set())
                         ->items($fields),
                     //Add a comment
-                    (new Form('comments-form'))
+                    (new Form('comment-form'))
                         ->method('post')
                         ->action(App::backend()->url()->get('admin.comment'))
                         ->fields([

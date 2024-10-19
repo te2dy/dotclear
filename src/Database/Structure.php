@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Dotclear\Database;
 
 use Dotclear\Interface\Core\ConnectionInterface;
-use Exception;
 
 /**
  * @class Structure
@@ -141,10 +140,6 @@ class Structure
     {
         $this->tables = [];
         $this->reverse();
-
-        if (!($s instanceof self)) {
-            throw new Exception('Invalid database schema');
-        }
 
         $tables = $s->getTables();
 
@@ -345,7 +340,7 @@ class Structure
     }
 
     /**
-     * Gets the tables.
+     * Gets the tables (table keys include prefix).
      *
      * @return     array<string, Table>  The tables.
      */
@@ -362,7 +357,7 @@ class Structure
     /**
      * Determines if table exists.
      *
-     * @param      string  $name   The name
+     * @param      string  $name   The name (including prefix)
      *
      * @return     bool    True if table exists, False otherwise.
      */
